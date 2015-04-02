@@ -2,7 +2,7 @@ describe Hash do
   describe "#my_merge" do
 
     let(:vowels) { {"a" => 1, "e" => 2, "i" => 3} }
-    let(:consonants) { {"b" => 4, "c" => 5, "d" => 6} } 
+    let(:consonants) { {"b" => 4, "c" => 5, "d" => 6} }
     let(:alphabet) { {"a"=>"apple", "b"=>"banana", "c"=> "carrot", "e" => "egg"} }
 
     it "doesn't change the original hash" do
@@ -20,7 +20,7 @@ describe Hash do
       vowels.my_merge(consonants)
     end
 
-    it "doesn't use #merge" do     
+    it "doesn't use #merge" do
       expect_any_instance_of(Hash).to_not receive(:merge)
       vowels.my_merge(consonants)
     end
@@ -47,7 +47,7 @@ describe Hash do
         it "executes the block to determine each key, value pair" do
           h1 = { "a" => 1, "b" => 2 }
           h2 = { "c" => 3, "d" => 4 }
-          result = h1.merge(h2) { |key, oldval, newval| newval - oldval }
+          result = h1.my_merge(h2) { |key, oldval, newval| newval - oldval }
           expect(result.keys.length).to eq(4)
           expect(result).to eq({"a"=>1, "b"=>2, "c"=>3, "d"=>4})
         end
@@ -56,7 +56,7 @@ describe Hash do
         it "executes the block to determine each key, value pair" do
           h1 = { "a" => 100, "b" => 200 }
           h2 = { "b" => 254, "c" => 300 }
-          result = h1.merge(h2) { |key, oldval, newval| newval - oldval }
+          result = h1.my_merge(h2) { |key, oldval, newval| newval - oldval }
           expect(result.keys.length).to eq(3)
           expect(result).to eq({"a"=>100, "b"=>54, "c"=>300})
         end
